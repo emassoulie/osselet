@@ -40,3 +40,10 @@ https://arjunsreedharan.org/post/82710718100/kernels-101-lets-write-a-kernel
 - Idée plus précise de comment tout ça démarre
 - Faire marcher en local l'émulateur avec un OS de rien du tout
 - Réfléchir à un système de fichiers ?
+
+
+## Notes de Max
+
+- QEMU c'est pas mal
+- Petit makefile bien pratique
+- COmmande pour QEMU : `qemu-system-x86_64 -kernel ./kernel`
