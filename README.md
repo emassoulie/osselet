@@ -6,24 +6,24 @@ https://arjunsreedharan.org/post/82710718100/kernels-101-lets-write-a-kernel
 
 ### Noyau
 
-[ ] Exister
-[ ] Démarrer / s'éteindre / redémarrer
-[ ] Gestion du clavier
-[ ] Gestion de l'écran
-[ ] Communication avec le shell
-[ ] Système de fichiers (à inventer éventuellement)
-[ ] Donner et reprendre les commandes à un processus
-[ ] Lire et écrire dans la RAM
-[ ] Parallélisme ?
-[ ] Compilateur quelconque
+- [ ] Exister
+- [ ] Démarrer / s'éteindre / redémarrer
+- [ ] Gestion du clavier
+- [ ] Gestion de l'écran
+- [ ] Communication avec le shell
+- [ ] Système de fichiers (à inventer éventuellement)
+- [ ] Donner et reprendre les commandes à un processus
+- [ ] Lire et écrire dans la RAM
+- [ ] Parallélisme ?
+- [ ] Compilateur quelconque
 
 ### Shell
 
-[ ] Petit shell
-[ ] poweroff, reboot
-[ ] ls, cd, pwd
-[ ] cp, mv, rm, touch, mkdir
-[ ] boucles, variables, fonctions, communication avec les LEDs
+- [ ] Petit shell
+- [ ] poweroff, reboot
+- [ ] ls, cd, pwd
+- [ ] cp, mv, rm, touch, mkdir
+- [ ] boucles, variables, fonctions, communication avec les LEDs
 
 ### Système de fichiers
 
@@ -31,7 +31,7 @@ https://arjunsreedharan.org/post/82710718100/kernels-101-lets-write-a-kernel
 
 ### Programmes
 
-[ ] Lanceur de scripts shell
+- [ ] Lanceur de scripts shell
 
 
 
