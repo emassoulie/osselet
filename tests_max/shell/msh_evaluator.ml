@@ -1,5 +1,7 @@
 open Msh_ast
 
+(* Convertir progressivement vers la lib Unix *)
+(* Puis reconvertir vers une libC perso *)
 
 let exec_simple_cmd cmd =
   let line, redirects, bg = cmd.cmd_line, cmd.cmd_redirects, cmd.cmd_bg in 
