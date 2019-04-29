@@ -6,10 +6,10 @@ https://arjunsreedharan.org/post/82710718100/kernels-101-lets-write-a-kernel
 
 ### Noyau
 
-- [ ] Exister
+- [x] Exister
 - [ ] Démarrer / s'éteindre / redémarrer
+- [x] Gestion de l'écran
 - [ ] Gestion du clavier
-- [ ] Gestion de l'écran
 - [ ] Communication avec le shell
 - [ ] Système de fichiers (à inventer éventuellement)
 - [ ] Donner et reprendre les commandes à un processus
