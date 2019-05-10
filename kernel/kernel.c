@@ -2,8 +2,9 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#include "string.h"
-#include "tty.h"
+#include "lib/string.h"
+#include "lib/printf.h"
+#include "lib/tty.h"
 
  
 void kernel_main(void) 
@@ -12,7 +13,7 @@ void kernel_main(void)
     terminal_initialize();
  
     /* Newline support is left as an exercise. */
-    terminal_writestring("Hello, kernel World!\n");
-    terminal_writestring("Hello, kernel World! tes tes tes ètes tes tsip ma sfhjmghjasm fjg mkasgjf mjg mkasgfm gâusg kmg acg mkj iuasg kjmqxc bmknhua zh");
-        terminal_scrolldown(1);
+    terminal_writenewline("Hello, kernel World!");
+    terminal_writenewline("Hello, kernel World! tes tes tes ètes tes tsip ma sfhjmghjasm fjg mkasgjf mjg mkasgfm gâusg kmg acg mkj iuasg kjmqxc bmknhua zh");
+    my_printf("t");
 }
