@@ -13,7 +13,7 @@ void kernel_main(void)
     terminal_initialize();
  
     /* Newline support is left as an exercise. */
-    terminal_writenewline("Hello, kernel World!");
-    terminal_writenewline("Hello, kernel World! tes tes tes ètes tes tsip ma sfhjmghjasm fjg mkasgjf mjg mkasgfm gâusg kmg acg mkj iuasg kjmqxc bmknhua zh");
-    my_printf("t");
+    terminal_writestring("Hello, kernel World!");
+    //terminal_writenewline("Hello, kernel World! tes tes tes ètes tes tsip ma sfhjmghjasm fjg mkasgjf mjg mkasgfm gâusg kmg acg mkj iuasg kjmqxc bmknhua zh");
+    //my_printf("t");
 }
