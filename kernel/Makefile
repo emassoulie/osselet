@@ -1,6 +1,6 @@
 myos.bin : linker.ld boot.o kernel.o string.o printf.o tty.o
 	i686-elf-gcc -T linker.ld -o myos.bin \
-	  -ffreestanding -O2 -nostdlib boot.o kernel.o lib/string.o lib/printf.o tty.o -lgcc
+	  -ffreestanding -O2 -nostdlib boot.o kernel.o lib/string.o lib/printf.o lib/tty.o -lgcc
 
 kernel.o : kernel.c
 	i686-elf-gcc -c kernel.c -o kernel.o \
