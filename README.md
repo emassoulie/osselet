@@ -41,6 +41,12 @@ https://arjunsreedharan.org/post/82710718100/kernels-101-lets-write-a-kernel
 - Faire marcher en local l'émulateur avec un OS de rien du tout
 - Réfléchir à un système de fichiers ?
 
+- Parser/lexer élémentaire : programme C, input stdio/output void
+  - Calculatrice
+  - Modificateur verbose
+  - Fonctions élémentaires (echo, ls, cd, pwd..)
+
+
 
 ## Notes de Max
 
