@@ -27,7 +27,7 @@ void printLine(char* string, int line, int column) {
         /* the character's ascii */
         vidptr[i++] = string[j++];
         /* attribute-byte: give character black bg and light grey fg */
-        vidptr[i++] = 0x02;
+        vidptr[i++] = 0x15;
     }
 }
 
