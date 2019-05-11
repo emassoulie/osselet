@@ -19,19 +19,19 @@ int printf(char *format,...) {
             if (format[0] == '%') {
                 format++;
             }
-            terminal_putchar(*format);
+            putchar(*format);
             format++;
             written++;
         } else {
             format++;
             switch(*format) {
                 case 'c': i = va_arg(params, int);
-                          terminal_putchar(i);
+                          putchar(i);
                           break;
                 case 'd': i = va_arg(params, int);
                           if (i < 0) {
                               i = -i;
-                              terminal_putchar('-');
+                              putchar('-');
                           }
                           char result[50];
                           char* ptr = result;
