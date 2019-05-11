@@ -25,6 +25,5 @@ $(lib_obj):
 	-std=gnu99 -ffreestanding -O2 -Wall -Wextra;)
 
 clean :
-	rm -f *.o
+	rm -f $(kernel_obj) $(lib_obj)
 	rm -f myos.bin
-	rm -f lib/*.o
