@@ -7,7 +7,7 @@ lib_obj = $(lib_src:.c=.o)
 # kernel
 
 myos.bin : kernel/linker.ld $(kernel_obj) $(lib_obj)
-	i686-elf-gcc -T kernel/linker.ld -o myos.bin \
+	i686-elf-gcc -T kernel/linker.ld -I lib/headers/ -o myos.bin \
 	  -ffreestanding -O2 -nostdlib $(lib_obj) $(kernel_obj) -lgcc
 
 kernel/kernel.o : kernel/kernel.c
@@ -21,7 +21,7 @@ kernel/boot.o : kernel/boot.s
 
 $(lib_obj):
 	$(foreach var, $(lib_src), \
-	i686-elf-gcc -c $(var) -o $(var:.c=.o) \
+	i686-elf-gcc -i lib/headers/ -c $(var) -o $(var:.c=.o) \
 	-std=gnu99 -ffreestanding -O2 -Wall -Wextra;)
 
 clean :

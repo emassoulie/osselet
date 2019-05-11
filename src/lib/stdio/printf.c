@@ -2,9 +2,9 @@
 #include <stdint.h>
 #include <stdarg.h>
 
-#include "../stdio.h"
-#include "../string.h"
-#include "../tty.h"
+#include "../headers/stdio.h"
+#include "../headers/string.h"
+#include "../headers/tty.h"
 
 int printf(char *format,...) { 
     va_list params; 

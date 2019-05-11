@@ -2,9 +2,9 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#include "../lib/string.h"
-#include "../lib/stdio.h"
-#include "../lib/tty.h"
+#include "../lib/headers/string.h"
+#include "../lib/headers/stdio.h"
+#include "../lib/headers/tty.h"
 
  
 void kernel_main(void) 

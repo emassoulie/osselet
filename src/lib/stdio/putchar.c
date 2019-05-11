@@ -2,8 +2,8 @@
 #include <stdint.h>
 #include <stdarg.h>
 
-#include "../stdio.h"
-#include "../tty.h"
+#include "../headers/stdio.h"
+#include "../headers/tty.h"
 
 int putchar(char c) { 
     terminal_putchar(c);
