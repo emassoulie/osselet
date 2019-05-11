@@ -3,71 +3,49 @@
 #include <stdarg.h>
 
 #include "../stdio.h"
+#include "../string.h"
 #include "../tty.h"
 
-void printf(char *format,...) 
-{ 
-    char *traverse;
-    unsigned int i;
-    char *s;
- 
-    va_list arg; 
-    va_start(arg, format); 
-    for (traverse = format; *traverse != '\0'; traverse++) 
-    { 
-        while((*traverse != '%') & (*traverse != '\0')) 
-        { 
-            terminal_putchar(*traverse);
-            traverse++; 
-        } 
-
-        if (*traverse == '%') {
-            traverse++; 
-            switch(*traverse) { 
-                case 'c' : i = va_arg(arg, int);     //Fetch char argument
-                    terminal_putchar(i);
-                    break; 
-                            
-                case 'd' : i = va_arg(arg, int);         //Integer
-                    if(i < 0) { 
-                        i = -i;
-                        terminal_putchar('-'); 
-                    } 
-                    printf(convert(i, 10));
-                    break; 
-                            
-                case 'o': i = va_arg(arg, unsigned int); //Octal
-                    printf(convert(i,8));
-                    break ;
-                            
-                case 's': s = va_arg(arg, char*);       //String
-                    printf(s); 
-                    break; 
-                            
-                case 'x': i = va_arg(arg, unsigned int); //Hexadecimal
-                    printf(convert(i,16));
-                    break; 
-            }
-        }   
-    } 
+int printf(char *format,...) { 
+    va_list params; 
+    va_start(params, format); 
     
-    va_end(arg); 
+    int written = 0;
+
+    int i;
+
+    while (*format != '\0') {
+        if (format[0] != '%' || (strlen(format) > 0 && format[1] == '%')) {
+            if (format[0] == '%') {
+                format++;
+            }
+            terminal_putchar(*format);
+            format++;
+            written++;
+        } else {
+            format++;
+            switch(*format) {
+                case 'c': i = va_arg(params, int);
+                          terminal_putchar(i);
+                          break;
+                case 'd': i = va_arg(params, int);
+                          if (i < 0) {
+                              i = -i;
+                              terminal_putchar('-');
+                          }
+                          char result[50];
+                          char* ptr = result;
+                          do {
+                              *ptr++ = "0123456789"[i%10];
+                              i /= 10;
+                              written++;
+                          } while (i != 0);
+                          *ptr-- = '\0';
+                          printf(result);
+            format++;
+            }
+        }
+    }
+    va_end(params);
+    return written;
 } 
-
-char *convert(unsigned int num, int base)
-{
-    static char Representation[]= "0123456789ABCDEF";
-    static char buffer[50];
-    char *ptr;
-
-    ptr = &buffer[49];
-    *ptr = '\0';
-
-    do
-    {
-        *--ptr = Representation[num%base];
-        num /= base;
-    }while(num != 0);
-
-    return(ptr);
-}
