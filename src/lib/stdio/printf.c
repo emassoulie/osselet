@@ -2,8 +2,8 @@
 #include <stdint.h>
 #include <stdarg.h>
 
-#include "lib/stdio.h"
-#include "lib/tty.h"
+#include "../stdio.h"
+#include "../tty.h"
 
 void printf(char *format,...) 
 { 
@@ -15,13 +15,13 @@ void printf(char *format,...)
     va_start(arg, format); 
     for (traverse = format; *traverse != '\0'; traverse++) 
     { 
-        while(*traverse != '%' & *traverse != '\0') 
+        while((*traverse != '%') & (*traverse != '\0')) 
         { 
             terminal_putchar(*traverse);
             traverse++; 
         } 
 
-        if (traverse == '%') {
+        if (*traverse == '%') {
             traverse++; 
             switch(*traverse) { 
                 case 'c' : i = va_arg(arg, int);     //Fetch char argument

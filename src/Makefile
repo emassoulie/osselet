@@ -1,26 +1,28 @@
-myos.bin : linker.ld boot.o kernel.o string.o printf.o tty.o
-	i686-elf-gcc -T linker.ld -o myos.bin \
-	  -ffreestanding -O2 -nostdlib boot.o kernel.o lib/string.o lib/printf.o lib/tty.o -lgcc
+# Makefile
 
-kernel.o : kernel.c
-	i686-elf-gcc -c kernel.c -o kernel.o \
-	  -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+kernel_obj = kernel/kernel.o kernel/boot.o
+lib_src = $(wildcard lib/*.c) $(wildcard lib/*/*.c)
+lib_obj = $(lib_src:.c=.o)
 
-printf.o : lib/printf.c
-	i686-elf-gcc -c lib/printf.c -o lib/printf.o \
-	  -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+# kernel
 
-string.o : lib/string.c
-	i686-elf-gcc -c lib/string.c -o lib/string.o \
-	  -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+myos.bin : kernel/linker.ld $(kernel_obj) $(lib_obj)
+	i686-elf-gcc -T kernel/linker.ld -o myos.bin \
+	  -ffreestanding -O2 -nostdlib $(lib_obj) $(kernel_obj) -lgcc
 
-tty.o : lib/tty.c
-	i686-elf-gcc -c lib/tty.c -o lib/tty.o \
-	  -std=gnu99 -ffreestanding -O2 -Wall -Wextra
+kernel/kernel.o : kernel/kernel.c
+	i686-elf-gcc -c $^ -o $@ -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
-boot.o : boot.s
-	i686-elf-as boot.s -o boot.o
+kernel/boot.o : kernel/boot.s
+	i686-elf-as $^ -o $@
 
+
+# libs
+
+$(lib_obj):
+	$(foreach var, $(lib_src), \
+	i686-elf-gcc -c $(var) -o $(var:.c=.o) \
+	-std=gnu99 -ffreestanding -O2 -Wall -Wextra;)
 
 clean :
 	rm -f *.o
