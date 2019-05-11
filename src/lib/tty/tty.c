@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stddef.h>
+
 #include "../string.h"
 
 /* Hardware text mode color constants. */
@@ -68,6 +69,15 @@ uint16_t terminal_getentryat(size_t x, size_t y) {
     return terminal_buffer[index];
 }
 
+void terminal_scrolldown(int n) {
+    for (size_t y = 0; y < VGA_HEIGHT; y++) {
+        for (size_t x = 0; x < VGA_WIDTH; x++) {
+            const size_t index = y * VGA_WIDTH + x;
+            terminal_buffer[index] = terminal_getentryat(x, y+n);
+        }
+    }
+}
+
 void terminal_putchar(char c) {
     terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
     if (++terminal_column == VGA_WIDTH || c == '\n') {
@@ -92,13 +102,4 @@ void terminal_writestring(const char* data) {
 void terminal_writenewline(const char* data) {
     terminal_putchar('\n');
     terminal_write(data, strlen(data));
-}
-
-void terminal_scrolldown(int n) {
-    for (size_t y = 0; y < VGA_HEIGHT; y++) {
-        for (size_t x = 0; x < VGA_WIDTH; x++) {
-            const size_t index = y * VGA_WIDTH + x;
-            terminal_buffer[index] = terminal_getentryat(x, y+n);
-        }
-    }
 }
