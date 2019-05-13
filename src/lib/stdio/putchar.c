@@ -2,10 +2,10 @@
 #include <stdint.h>
 #include <stdarg.h>
 
-#include "../headers/stdio.h"
-#include "../headers/tty.h"
+#include <stdio.h>
+#include <tty.h>
 
-int putchar(char c) { 
+int putchar(const char c) { 
     terminal_putchar(c);
     return (int) c;
 } 

@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#include "../headers/string.h"
+#include <string.h>
 
 /* Hardware text mode color constants. */
 enum vga_color {
