@@ -10,10 +10,9 @@ void kernel_main(void) {
 
     terminal_initialize();
 
-    printf("Hello, world!\n");
-    printf("%d\n", 12345);
-    printf("%c\n", 't');
-    printf("%s\n", "test");
-    char* str = strcat("COU", "cou");
-    printf(str);
+    printf("%d\n", memcmp("cous", "cous", 3));
+    printf("%d\n", memcmp("cous", "coxs", 2));
+    printf("%d\n", memcmp("cous", "coxs", 3));
+    printf("%d\n", memcmp("cous", "coxs", 4));
+    printf("%d\n", memcmp("cou", "cox", 2));
 }

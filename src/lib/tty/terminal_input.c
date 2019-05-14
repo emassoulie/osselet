@@ -4,3 +4,7 @@
 
 #include <string.h>
 
+int get_single_key()
+{
+    
+}
