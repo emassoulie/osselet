@@ -10,12 +10,11 @@
 
 void repl()
 {
-    char input[10];
-	while(strcmp(input,"exit") != 10)
-    {
+    char input[50];
+	do {
         fgets(input, 10, stdin); 
         printf("%s\n", input); 
-    }
+    } while (!(strlen(input) == 5 && memcmp(input, "exit", 4) == 0));
 }
 
 
@@ -81,25 +80,18 @@ List* lex(char *entiers);
 int main()
 {
 
-    char entiers[10];
-    entiers[0] = '0';
-    entiers[1] = '1';
-    entiers[2] = '2';
-    entiers[3] = '3';
-    entiers[4] = '4';
-    entiers[5] = '5';
-    entiers[6] = '6';
-    entiers[7] = '7';
-    entiers[8] = '8';
-    entiers[9] = '9';
+    char entiers[11] = "0123456789";
     List* tokens = lex(entiers);
     List **lect = &tokens;
+	
     while (*lect != NULL)
     {
 		void *x = &(*lect)->data;
 		printok(*(struct token *)x);
 		lect = &(*lect)->next;
     }
+	
+	repl();
     return 0;
 }
 
@@ -177,7 +169,6 @@ List* lex(char *entiers)
     }
     return(tokens);
 }
-
 
 
 
