@@ -12,7 +12,7 @@ void repl()
 {
     char input[50];
 	do {
-        fgets(input, 10, stdin); 
+        fgets(input, 50, stdin); 
         printf("%s\n", input); 
     } while (!(strlen(input) == 5 && memcmp(input, "exit", 4) == 0));
 }
@@ -80,7 +80,7 @@ List* lex(char *entiers);
 int main()
 {
 
-    char entiers[11] = "0123456789";
+    char entiers[10] = "0123456789";
     List* tokens = lex(entiers);
     List **lect = &tokens;
 	
@@ -119,9 +119,9 @@ int member(char *liste,char c)
 List* lex(char *entiers)
 {
     List *tokens = NULL;
-    char input[10];
+    char input[50];
     char *curseur;
-    fgets(input, 10, stdin);
+    fgets(input, 50, stdin);
     for (curseur = input; *curseur != '\0'; curseur++)
     {
 	struct token *x;
