@@ -19,12 +19,16 @@ void *memcpy(void *dest, const void *src, size_t n)
     return dest;
 }
 
-// On peut probablement faire mieux avec __np_anyptrlt, TODO ?
 void *memmove(void *dest, const void *src, size_t n)
 {
-    unsigned char temp[n];
-    memcpy(temp, src, n);
-    memcpy(dest, temp, n);
+    const unsigned char *srcp = src;
+    unsigned char *destp = dest;
+    if (destp < srcp) // Si la dest est "à gauche" : comme memcpy
+        while ((*destp++ = *srcp++) && n--);
+    else  // Sinon même chose mais à l'envers
+        do {
+            destp[n] = srcp[n];
+        } while (n-- + 1);
     return dest;
 }
 

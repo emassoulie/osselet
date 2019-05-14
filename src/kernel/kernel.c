@@ -9,10 +9,7 @@
 void kernel_main(void) {
 
     terminal_initialize();
-
-    printf("%d\n", memcmp("cous", "cous", 3));
-    printf("%d\n", memcmp("cous", "coxs", 2));
-    printf("%d\n", memcmp("cous", "coxs", 3));
-    printf("%d\n", memcmp("cous", "coxs", 4));
-    printf("%d\n", memcmp("cou", "cox", 2));
+    
+    char version[3] = "0.1";
+    printf("OSselet, version %s\n", version);
 }
