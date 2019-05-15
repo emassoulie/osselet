@@ -3,7 +3,7 @@
 
 void shell_repl();
 void shell_eval(char *input);
-void read_command(char *line);
-void read_arguments(const char *command, char *line);
+void read_line(char *line);
+void run(const char *command, char **args);
 
 #endif
