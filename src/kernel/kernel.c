@@ -5,15 +5,16 @@
 #include <string.h>
 #include <stdio.h>
 #include <tty.h>
- 
+
+#include "../usr/shell/shell.h"
+
 void kernel_main(void) {
 
     terminal_initialize();
     
     char version[3] = "0.1";
     printf("OSselet, version %s\n", version);
-    char str = strcat("cou", "COU");
-    printf("%d\n", 123456789);
-    printf("%d\n", 1234567);
-    printf("\n\nFin.");
+    shell_eval("cat fichier_1 fichier_2 fichier_3");
+    shell_eval("echo coucou");
+    printf("Fin.");
 }
