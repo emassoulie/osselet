@@ -3,6 +3,7 @@
 #include <stddef.h>
 
 #include <string.h>
+#include <stdio.h>
 
 
 /*
@@ -122,7 +123,8 @@ void keyboard_handler_main(void)
 
 		//vidptr[current_loc++] = keyboard_map[(unsigned char) keycode];
 		//vidptr[current_loc++] = 0x07;
-		putchar(keyboard_map[(unsigned char) keycode]);
+        printf("\n%d - ", (unsigned char) keycode);
+		putchar(keyboard_map_lower[(unsigned char) keycode]);
 
 	}
 }
