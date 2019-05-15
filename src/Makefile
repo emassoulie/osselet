@@ -25,9 +25,8 @@ kernel/kernel.o : kernel/kernel.c
 	i686-elf-gcc -I $(include) -I $(apps) -c $^ -o $@ \
 	  -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 
-kernel/boot.o : kernel/boot.s
-	i686-elf-as $^ -o $@
-
+kernel/boot.o : kernel/boot.asm
+	nasm -felf32 kernel/boot.asm -o kernel/boot.o
 
 # libs
 

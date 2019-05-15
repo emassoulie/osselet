@@ -29,19 +29,20 @@
 
 void shell_repl()
 {
+    int ret;
     char input[256];
     do {
         // fgets(input, 50, stdin); 
-        shell_eval(input);
+        ret = shell_eval(input);
     } while (!(strlen(input) == 5 && memcmp(input, "exit", 4) == 0));
 }
 
-void shell_eval(char *input)
+int shell_eval(char *input)
 {
     return read_line(input);
 }
 
-void read_line(char *line)
+int read_line(char *line)
 {
     // Identification de la commande
     char command[32];
@@ -90,9 +91,75 @@ void read_line(char *line)
     return run(command, args);
 }
 
-void run(const char *command, char **args)
+int run(const char *command, char **args)
 {
     printf("Commande : %s\n", command);
     for (int i = 0; *args[i] != '\0'; i++)
-        printf("Argument %d : %s\n", i, args[i]);    
+        printf("Argument %d : %s\n", i, args[i]);
+    if (strcmp(command, "exit") == 0) {
+        return exit(args);
+    }
+    else if (strcmp(command, "pwd") == 0) {
+        return pwd(args);
+    }
+    else if (strcmp(command, "touch") == 0) {
+        return touch(args);
+    }
+    else if (strcmp(command, "mkdir") == 0) {
+        return mkdir(args);
+    }
+    else if (strcmp(command, "cd") == 0) {
+        return cd(args);
+    }
+    else if (strcmp(command, "rm") == 0) {
+        return rm(args);
+    }
+    else if (strcmp(command, "rmdir") == 0) {
+        return rmdir(args);
+    }
+    else if (strcmp(command, "echo") == 0) {
+        return echo(args);
+    }
+    else if (strcmp(command, "cat") == 0) {
+        return cat(args);
+    }
+}
+
+int exit(char **args) {
+    // Exit interrupt !
+    // Kill PID etc
+    return 0;
+}
+
+int pwd(char **args) {
+    return 0;
+}
+
+int touch(char **args) {
+    return 0;
+}
+
+int mkdir(char **args) {
+    return 0;
+}
+
+int cd(char **args) {
+    return 0;
+}
+
+int rm(char **args) {
+    return 0;
+}
+
+int rmdir(char **args) {
+    return 0;
+}
+
+int echo(char **args) {
+    char *str = args[0];
+    printf("%s", str);
+}
+
+int cat(char **args) {
+    return 0;
 }
