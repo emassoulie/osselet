@@ -6,5 +6,5 @@
 
 int get_single_key()
 {
-    
+    return 0;
 }

@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include <tty.h>
 
 int printf(const char *format,...) { 
@@ -17,9 +18,8 @@ int printf(const char *format,...) {
 
     while (*format != '\0') {
         if (format[0] != '%' || (strlen(format) > 0 && format[1] == '%')) {
-            if (format[0] == '%') {
+            if (format[0] == '%')
                 format++;
-            }
             putchar(*format);
             format++;
             written++;

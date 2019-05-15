@@ -1,2 +1,3 @@
 *.o
-myos.bin
+*.out
+OSselet.bin
