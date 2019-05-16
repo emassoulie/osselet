@@ -103,3 +103,19 @@ void terminal_writenewline(const char* data) {
     terminal_putchar('\n');
     terminal_write(data, strlen(data));
 }
+
+void terminal_move_left() {
+    if (terminal_column > 0)
+        terminal_column -= 1;
+}
+
+void terminal_move_right() {
+    if (terminal_column < VGA_WIDTH)
+        terminal_column += 1;
+}
+
+void terminal_backspace() {
+    terminal_move_left();
+    terminal_putchar('\0');
+    terminal_move_left();
+}

@@ -16,5 +16,6 @@ int rm(char **args);
 int rmdir(char **args);
 int echo(char **args);
 int cat(char **args);
+int append(char **args);
 
 #endif

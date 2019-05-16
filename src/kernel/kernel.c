@@ -6,27 +6,35 @@
 #include <stdio.h>
 #include <tty.h>
 
+#include <filesystem.h>
+
 #include "../usr/shell/shell.h"
 
 
 
 void kernel_initialize()
 {
+    terminal_initialize();
+    ofs_init();
     idt_init();
-    kb_init();
 }
 
 void kernel_main(void)
 {
     kernel_initialize();
-	terminal_initialize();
     
     char version[3] = "0.1";
-    printf("OSselet, version %s\n", version);
-    shell_eval("cat fichier1 fichier2 fichier3");
-    shell_eval("echo \"couc>&ou toi\"");
-    shell_eval("pwd");
-    printf("Fin.");
+    printf("OSselet, version %s\n\n", version);
+    
+    shell_eval("touch fichier1 fichier2");
+    shell_eval("touch fichier3");
 
-    while(1); /*idem*/
+    shell_eval("ls");
+
+    // shell_eval("rm fichier 3");
+    // shell_eval("ls");
+
+    kb_read(); 
+
+    printf("Fin.");
 }

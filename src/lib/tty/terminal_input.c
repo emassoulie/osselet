@@ -4,7 +4,9 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <tty.h>
 
+#include <../../usr/shell/shell.h>
 
 /*
 * Inspiré de Arjun Sreedharan
@@ -19,7 +21,11 @@
 #define INTERRUPT_GATE 0x8e
 #define KERNEL_CODE_SEGMENT_OFFSET 0x08
 
+#define ESC_KEY_CODE 0x1
 #define ENTER_KEY_CODE 0x1C
+#define BACKSPACE_KEY_CODE 0xE
+#define CAPS_KEY_CODE 0x2A
+
 
 extern unsigned char keyboard_map[128];
 extern void keyboard_handler(void);
@@ -94,37 +100,69 @@ void idt_init(void)
     load_idt(idt_ptr);
 }
 
-void kb_init(void)
+bool input_over = true;
+char input_line[256];
+char *input_ptr = input_line;
+
+void kb_open()
 {
-	write_port(0x21 , 0xFD);
+    input_over = false;
+    write_port(0x21 , 0xFD);
 }
 
-
-/*� MODIFIER ABSOLUMENT*/
-void keyboard_handler_main(void)
+void kb_close()
 {
-	unsigned char status;
-	char keycode;
+    input_over = true;
+    /* mask interrupts */
+    write_port(0x21 , 0xff);
+    write_port(0xA1 , 0xff);
+    write_port(KEYBOARD_STATUS_PORT, 0x00);
+    printf("\n");
+    read_line(input_line);
+}
 
-	/* write EOI */
-	write_port(0x20, 0x20);
+char *kb_read()
+{
+    printf("\n> ");
+    for (int i = 0; i < 256; i++)
+        input_line[i] = '\0';
+    input_ptr = input_line;
+    kb_open();
+    int i = 0;
+    while (!input_over);
+    printf("\nkb_read() finished\n");
+    return input_line;
+}
 
-	status = read_port(KEYBOARD_STATUS_PORT);
-	/* Lowest bit of status will be set if buffer is not empty */
-	if (status & 0x01) {
-		keycode = read_port(KEYBOARD_DATA_PORT);
-		if(keycode < 0)
-			return;
+void keyboard_handler_main()
+{
 
-		if(keycode == ENTER_KEY_CODE) {
-			printf("\n");
-			return;
-		}
+    unsigned char status;
+    char keycode;
+    char chr;
 
-		//vidptr[current_loc++] = keyboard_map[(unsigned char) keycode];
-		//vidptr[current_loc++] = 0x07;
-        printf("\n%d - ", (unsigned char) keycode);
-		putchar(keyboard_map_lower[(unsigned char) keycode]);
-
-	}
+    /* write EOI */
+    write_port(0x20, 0x20);
+    
+    status = read_port(KEYBOARD_STATUS_PORT);
+    /* Lowest bit of status will be set if buffer is not empty */
+    if  (status & 0x01) {
+        keycode = read_port(KEYBOARD_DATA_PORT);
+        if (keycode < 0) {
+        }
+        else if (keycode == BACKSPACE_KEY_CODE) {
+            terminal_backspace();
+            if (input_ptr > input_line)
+                *--input_ptr = '\0';
+        }
+        else if (keycode == ENTER_KEY_CODE) {
+            return kb_close();
+        }
+        else {
+            chr = keyboard_map_lower[(unsigned char) keycode];
+            terminal_putchar(chr);
+            *input_ptr++ = chr;
+        }
+    }
+    return;
 }
