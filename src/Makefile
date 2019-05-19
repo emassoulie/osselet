@@ -43,7 +43,6 @@ $(mem_obj):
 		  -c $(var) -o $(var:.c=.o) \
 		  -std=gnu99 -ffreestanding -O2 -Wall -Wextra ;)
 
-
 # usr
 
 $(usr_obj):
@@ -53,5 +52,5 @@ $(usr_obj):
 		  -std=gnu99 -ffreestanding -O2 -Wall -Wextra ;)
 
 clean :
-	rm -f $(kernel_obj) $(lib_obj) $(usr_obj)
+	rm -f $(kernel_obj) $(lib_obj) $(usr_obj) $(mem_obj)
 	rm -f OSselet.bin

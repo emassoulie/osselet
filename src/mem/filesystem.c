@@ -80,6 +80,7 @@ int ofs_create(char *file, char *nom) {
 			curseur++;
 		}
 	}
+	printf("fin de create\n");
 	return rk;
 }
 
@@ -121,10 +122,11 @@ char* ofs_cat(char *n) {
 
 void ofs_ls() {
 	int i = 0;
-	while (i < MEM_SIZE) {
-        if (sommaire[i].libre != 0)
+	while( i < MEM_SIZE && sommaire[i].debut < MEM_SIZE) {
+        if (sommaire[i].libre == 0) {
             printf("\n%d - %s",i,sommaire[i].nom);
-        i++;
+		}
+		i++;
     }
 	printf("\n");
 }
@@ -165,5 +167,13 @@ void ofs_cleanup() {
 			ofs_moveword(curseur + 1,sommaire[curseur].debut);
 			curseur++;
 		}
+	}
+	curseur = 0;
+	while (sommaire[curseur + 1].debut < MEM_SIZE) {
+		if (sommaire[curseur].libre == 1 && sommaire[curseur + 1].libre == 1) {
+			sommaire[curseur].fin = sommaire[curseur + 1].fin;
+			ofs_shift(curseur + 1);
+		}
+		curseur++;
 	}
 }
