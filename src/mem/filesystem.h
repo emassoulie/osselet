@@ -9,5 +9,8 @@ int ofs_append(char* mot2, char *n);
 int lookup(char *n);
 char* ofs_cat(char *n);
 void ofs_ls();
+void ofs_moveword(int rk, int i);
+void ofs_shift(int i);
+void cleanup();
 
 #endif

@@ -103,11 +103,9 @@ void ofs_remove(char *n) {
 }
 
 int ofs_append(char *mot2, char *n) {
-	int rk = ofs_lookup(n);
-    char *mot1 = ofs_cat(rk);
-    char *name = sommaire[rk].nom;
-    ofs_remove(rk);
-    return ofs_create(strcat(mot1, mot2), name);
+	char *mot1 = ofs_cat(n);
+    ofs_remove(n);
+    return ofs_create(strcat(mot1, mot2), n);
 }
 
 char* ofs_cat(char *n) {
@@ -122,12 +120,50 @@ char* ofs_cat(char *n) {
 }
 
 void ofs_ls() {
-    int i = 0;
-    while (sommaire[i].debut < MEM_SIZE) {
-		printf("%d",i);
+	int i = 0;
+	while (i < MEM_SIZE) {
         if (sommaire[i].libre != 0)
             printf("\n%d - %s",i,sommaire[i].nom);
         i++;
     }
 	printf("\n");
+}
+
+void ofs_moveword(int rk,int i) {
+	int curseur = sommaire[rk].debut;
+	for (curseur = sommaire[rk].debut; curseur < sommaire[rk].fin; curseur++) {
+		files[i] = files[curseur];
+		i++;
+		}
+	sommaire[rk].libre = 1;
+}
+
+void ofs_shift(int i) {
+	int curseur = i;
+	while (sommaire[curseur].debut < MEM_SIZE) {
+		sommaire[curseur] = sommaire[curseur + 1];
+		curseur++;
+	}
+}
+
+void ofs_cleanup() {
+	int curseur = 0;
+	while (sommaire[curseur + 1].debut < MEM_SIZE) {
+		if (sommaire[curseur].libre == 1 && sommaire[curseur + 1].libre == 1) {
+			sommaire[curseur].fin = sommaire[curseur + 1].fin;
+			ofs_shift(curseur + 1);
+		}
+		curseur++;
+	}
+	curseur = 0;
+	while (sommaire[curseur + 1].debut < MEM_SIZE) {
+		if (sommaire[curseur].libre == 1) {
+			struct emplacement temp;
+			temp = sommaire[curseur];
+			sommaire[curseur + 1] = temp;
+			sommaire[curseur] = sommaire[curseur + 1];
+			ofs_moveword(curseur + 1,sommaire[curseur].debut);
+			curseur++;
+		}
+	}
 }
