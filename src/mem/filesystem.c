@@ -34,8 +34,8 @@ void ofs_init()
     strcpy(sommaire[1].nom, "");
 }
 
-int ofs_touch() {
-	return(ofs_create("test","tch"));
+int ofs_touch(char *fichier) {
+	return ofs_create("default file content", fichier);
 }
 
 
@@ -43,14 +43,14 @@ int ofs_create(char *file, char *nom) {
 	char *lettre = file;
 	int size = 0;
 	while (*lettre != '\0') {
-		lettre ++;
-		size ++;
+		lettre++;
+		size++;
 	}
 	int rk = 0;
 
 	/*recherche du premier emplacement libre assez grand*/
-	while (!(sommaire[rk].libre == 1 && sommaire[rk].fin - sommaire[rk].debut < size) && rk < MEM_SIZE)
-		rk ++;
+	while (!(sommaire[rk].libre == 1 && (sommaire[rk].fin - sommaire[rk].debut) < size) && rk < MEM_SIZE)
+		rk++;
 	if (rk < MEM_SIZE) {
 		/*on rentre le nouveau fichier dans le sommaire*/
 		sommaire[rk].libre = 0;
@@ -80,7 +80,6 @@ int ofs_create(char *file, char *nom) {
 			curseur++;
 		}
 	}
-	printf("fin de create\n");
 	return rk;
 }
 

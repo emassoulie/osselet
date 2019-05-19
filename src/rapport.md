@@ -4,7 +4,7 @@ Maximilien Dupont de Dinechin et Eloi Massoulié
 
 ## 1. Objectifs
 
-L'objectif était d'implémenter un OS minimal, appelé `OSselet`, sous forme d'un microkernel et d'un shell. Nous n'avons pas atteint tous nos objectifs, loin de là, mais voici un desscriptif de ce que l'on souhaitait réaliser.
+L'objectif était d'implémenter un OS minimal, appelé `OSselet`, sous forme d'un microkernel et d'un shell. Nous n'avons pas atteint tous nos objectifs, loin de là, mais voici un descriptif de ce que l'on souhaitait réaliser.
 
 Pour le kernel :
 - démarrer sur une architecture virtuelle `x86` dans `qemu`,
@@ -23,7 +23,7 @@ En plus du cours, deux sources principales : OSDev et Kernel 101 (et 201) sur ht
 
 ## 3. Compilation
 
-La compilation du projet suppose d'avoir un cross-compiler GCC, dont l'installation est documentée ici : https://wiki.osdev.org/GCC_Cross-Compiler .
+La compilation du projet suppose d'avoir un cross-compiler GCC, dont l'installation est documentée ici : https://wiki.osdev.org/GCC_Cross-Compiler.
 
 Le fichier Makefile décrit la compilation automatisée du projet avec `make`, il n'y a plus qu'à lancer `qemu` avec l'option `-kernel OSselet.bin`.
 
@@ -41,7 +41,7 @@ Le dossier `mem/` contient le système de fichiers (et un embryon de malloc).
 
 #### 4.1.1 Démarrage, chargement du kernel
 
-Éloi tu peux expliquer ça stp ?
+Le fichier `kernel.c` réalise les initialisations de bibliothèques élémentaires (pour le shell, les interruptions et le système de fichiers décrits ci-après), puis se met en attente d'un signal de l'utilisateur. Nous avons de plus laissé la possibilité de rentrer des instructions pour le shell dans la fonction elle-même, sans passer par l'interface utilisateur.
 
 #### 4.1.2 Affichage
 
@@ -67,9 +67,9 @@ Le shell proposé est très basique. Il se découpe en un lexer minimaliste, qui
 
 ### 4.4 `mem/`
 
-Notre système de fichiers ne reposait pas sur un modèle préalable : les fichiers sont contenus dans une unique chaîne de caractères `files`, tandis qu'un second tableau `sommaire` contient les descriptions de chaque fichier (rangs de début et de fin dans `files`, booléen indiquant si chaque emplacement est libre). Avec ce modèle, nous avons développé quelques fonctions rudimentaires de création, lecture et manipulation de fichiers :
+Notre système de fichiers ne reposait pas sur un modèle préexistant : les fichiers sont contenus dans une unique chaîne de caractères `files`, tandis qu'un second tableau `sommaire` contient les descriptions de chaque fichier (rangs de début et de fin dans `files`, booléen indiquant si chaque emplacement est libre). Avec ce modèle, nous avons développé quelques fonctions rudimentaires de création, lecture et manipulation de fichiers :
 
-- `create` prend en entrée une chaîne de caractères et un nom à lui donner, et la crée dans `files`. Cela implique notamment de trouver un emplacement libre assez grand, puis de répertorier ce nouveau fichier dans `sommaire` ;
+- `create` prend en entrée une chaîne de caractères et un nom à lui donner, et la crée dans `files`. Cela implique notamment de trouver un emplacement libre assez grand, puis de répertorier ce nouveau fichier dans `sommaire`. L'adresse dans le sommaire du fichier créé est renvoyée ;
 
 - `lookup` est un auxiliaire permettant de trouver un fichier dans le sommaire en fonction de son nom ;
 
@@ -83,8 +83,12 @@ Notre système de fichiers ne reposait pas sur un modèle préalable : les fichi
 
 - `cleanup` est une fonction de nettoyage de la mémoire, qui utilise les deux précédentes `moveword` et `shift`. Lorsqu'elle est appelée, les emplacements libres adjacents sont fusionnés et déplacés vers la fin.
 
-En l'état, les tests sont rendus difficiles par des dysfonctionnements dans `create`.
+En l'état, les tests sont rendus difficiles par des dysfonctionnements dans `create`, développés plus loin.
 
-## 5. Conclusions
+## 5. Conclusions et problèmes rencontrés
 
-On en retient quoi ?
+Il semble que beaucoup de problèmes dans l'exécution du shell viennent du manque d'un vrai malloc : l'allocation automatique de C pour les string semble une création de nombreux conflits. En effet, l'affichage de messages de débug en cours d'éxecution était suffisant pour modifier en cours de route les paramètres d'appels de fonctions. C'est un problème dont nous n'avions pas soupçonné l'existence, et dont la découverte trop tardive a été un handicap pour mener à bien la communication entre le shell et le système de fichiers.
+
+Quelques incompréhensions autour de l'implémentation concrète des interruptions nous ont également empêché de mettre en place la communication que nous aurions aimé avoir avec le clavier : support des majuscules, ou bien même tout simplement rendre le contrôle au programme interrompu.
+
+De manière générale, l'aspect "concret" des choses a été une source de nombreuses difficultés : même en ayant écrit un malloc ou un système de fichiers fonctionnels dans la ram, nous n'avons pas réussi à les rattacher au "hardware".

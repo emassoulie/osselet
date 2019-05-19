@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <tty.h>
-#include <filesystem.c>
+#include <filesystem.h>
 
 #include "shell.h"
 
@@ -41,7 +41,7 @@ void shell_repl()
         printf("Command exited with code %d", ret);
     } while (!(strlen(input) == 5 && memcmp(input, "exit", 4) == 0));
     */
-    printf("\n> "),
+    printf("\n> ");
     strcpy(kb_read(), input);
     printf("over");
     printf("Input : %s", input);
@@ -49,7 +49,7 @@ void shell_repl()
 
 int shell_eval(char *input)
 {
-    printf("\n> %s", input);
+    printf("\n> %s\n", input);
     return read_line(input);
 }
 
@@ -72,6 +72,9 @@ int read_line(char *line)
     // Nettoyage
     for (int i = 0; i < 320; i++)
         arg[i] = 0;
+    for (int i = 0; i < 10; i++)
+        args[i][0] = 0;
+
     char *debut = arg;
     char *fin = arg;
 
@@ -137,7 +140,7 @@ int run(const char *command, char **args)
     else if (strcmp(command, "append") == 0) {
         return append(args);
     } else {
-        printf("Unsupported command");
+        printf("Unsupported command : %s", command);
         return 0;
     }
 }
@@ -149,8 +152,10 @@ int exit(char **args) {
 }
 
 int touch(char **args) {
-    for (int i = 0; args[i] != 0; i++)
+    for (int i = 0; args[i] != 0; i++) {
+        // printf("  touch with argument %s", args[i]);
         ofs_touch(args[i]);
+    }
     return 0;
 }
 

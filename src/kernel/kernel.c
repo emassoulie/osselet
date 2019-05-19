@@ -26,13 +26,13 @@ void kernel_main(void)
     char version[3] = "0.1";
     printf("OSselet, version %s\n\n", version);
     
-    shell_eval("touch fichier");
-    // shell_eval("touch fichier3");
+    shell_eval("echo test");
+
+    // shell_eval("touch test");
 
     // shell_eval("ls");
 
     // shell_eval("rm fichier 3");
-    // shell_eval("ls");
 
     kb_read();
 
